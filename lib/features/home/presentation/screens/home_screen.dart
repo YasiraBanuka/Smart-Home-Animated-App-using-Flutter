@@ -16,6 +16,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final controller = PageController(viewportFraction: 0.8);
+  final ValueNotifier<double> pageNotifier = ValueNotifier(0);
+
+  @override
+  void initState() {
+    controller.addListener(pageListener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller
+      ..removeListener(pageListener)
+      ..dispose();
+    super.dispose();
+  }
+
+  void pageListener() {
+    pageNotifier.value = controller.page ?? 0;
+  }
 
   @override
   Widget build(BuildContext context) {
